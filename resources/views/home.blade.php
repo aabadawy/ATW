@@ -15,9 +15,11 @@
                     @endif
 
                     You are logged in <span class="badge badge-info">{{ auth()->user()->name}}</span>
-                    <div class="m-2">
-                        <a href="{{route('questions.create')}}" class="btn btn-primary btn-sm">Create Quesitons</a>
-                    </div>
+                    @can('create question')
+                        <div class="m-2">
+                            <a href="{{route('questions.create')}}" class="btn btn-primary btn-sm">Create Quesitons</a>
+                        </div>
+                    @endcan
                 </div>
             </div>
         </div>

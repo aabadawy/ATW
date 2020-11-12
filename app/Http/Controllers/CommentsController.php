@@ -38,6 +38,7 @@ class CommentsController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create comment');
         $questions_ids = implode(',',Question::pluck('id')->toArray());
         $validateData  = $this->validate(
             $request,
@@ -71,6 +72,7 @@ class CommentsController extends Controller
     public function edit($id)
     {
         $comment = Comment::findOrFail($id);
+        $this->authorize('edit_comment',$comment);
         return view('comments.edit' , compact('comment'));
     }
 
@@ -84,6 +86,7 @@ class CommentsController extends Controller
     public function update(Request $request, $id)
     {
         $comment =Comment::findOrFail($id);
+        $this->authorize('edit_comment',$comment);
         $comment->update(['comment' => $request->get('comment')]);
         return redirect(route('questions.show',$comment->question_id));
     }
@@ -97,6 +100,7 @@ class CommentsController extends Controller
     public function destroy($id)
     {
         $comment = Comment::findOrFail($id);
+        $this->authorize('delete_comment',$comment);
         $comment->delete();
         return back();
     }

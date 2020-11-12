@@ -30,6 +30,7 @@ class QuestionsController extends Controller
      */
     public function create()
     {
+        $this->authorize('create question');
         return view('questions.create');
     }
 
@@ -41,6 +42,7 @@ class QuestionsController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create question');
         $this->validateQuestion($request);
         $question = Auth()->user()->questions()->create($request->all());
         return vire('questions.show', compact('question'));
@@ -69,6 +71,7 @@ class QuestionsController extends Controller
     public function edit($id)
     {
         $question = Question::findOrFail($id);
+        $this->authorize('edit_question',$question);
         return view('questions.edit', compact('question'));
     }
 
@@ -83,6 +86,7 @@ class QuestionsController extends Controller
     {
         $this->validateQuestion($request);
         $question = Question::findOrFail($id);
+        $this->authorize('edit_question',$question);
         $question->update($request->all());
         return response()->json($question,201);
     }
@@ -96,6 +100,7 @@ class QuestionsController extends Controller
     public function destroy($id)
     {
         $question = Question::findOrFail($id);
+        $this->authorize('delete_question',$question);
         $question->delete();
         return redirect(route('questions.index'));
     }
