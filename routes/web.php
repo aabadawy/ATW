@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('questions.index');
 });
 
 Auth::routes();
@@ -21,3 +21,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('questions/all', 'QuestionsController@allQuestions')->name('questions.all');
 Route::resource('questions', 'QuestionsController');
+
+Route::resource('comments', 'CommentsController');

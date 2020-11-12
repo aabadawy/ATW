@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Question extends Model
+class Comment extends Model
 {
-    protected $fillable = ['title','body'];
+    //
+    protected $fillable = ['comment', 'user_id', 'question_id'];
 
     public function getCreatedAtAttribute($value)
     {
@@ -18,8 +19,8 @@ class Question extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function comments()
+    public function question()
     {
-        return $this->hasMany('App\Models\Comment');
+        return $this->belongsTo('App\Models\Question');
     }
 }

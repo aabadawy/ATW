@@ -22,16 +22,31 @@
         <p class="card-text">{{$question->body}}</p>
         <p class="card-text">Asked By <span class="badge  badge-info"> {{$question['user']->name}}</span></p>
         <p class="card-text"><small class="text-muted">{{$question->created_at}}</small></p>
-        @for($i = 0; $i < 3 ; $i ++)
+        @forelse($question['comments'] as $comment)
             <div class="card my-1 border-info">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    <h5 class="card-title">Written By  <span class="font-weight-bold ">{{$comment->user->name}}</span></h5>
+                    <p class="card-text">{{$comment->comment}}</p>
+                    <p class="card-text">Said At <small class="text-muted">{{$comment->created_at}}</small></p>
                 </div>
                 <!-- <img class="card-img-bottom" src="..." alt="Card image cap"> -->
+                <div class="card-body">
+                    <a href="{{route('comments.edit',$comment->id)}}" class="btn btn-info">edit</a>
+                    <!-- <a href="#" class="btn btn-danger">delete</a> -->
+                    <form class="float-right" action="{{route('comments.destroy',$comment->id)}}" method="post">
+                        @method('DELETE')
+                        @csrf
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
             </div>
-        @endfor
+
+        @empty
+            <h2 class="text-center text-danger">There is no Comments Yet For THis Question</h2>
+        @endforelse
     </div>
 </div>
+<script></script>
+@include('comments.create')
+
 @endsection

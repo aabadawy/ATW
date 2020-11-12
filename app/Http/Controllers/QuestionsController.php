@@ -19,7 +19,8 @@ class QuestionsController extends Controller
 
     public function allQuestions()
     {
-        $questions =  Question::with('user')->get();
+        
+        $questions =  Question::with('user')->latest()->get();
         return response()->json($questions);
     }
     /**
@@ -42,7 +43,7 @@ class QuestionsController extends Controller
     {
         $this->validateQuestion($request);
         $question = Auth()->user()->questions()->create($request->all());
-        return response()->json($question,201);
+        return vire('questions.show', compact('question'));
     }
 
     /**
@@ -53,7 +54,9 @@ class QuestionsController extends Controller
      */
     public function show($id)
     {
-        $question = Question::with('user')->findOrFail($id);
+        $question = Question::with('user', 'comments')->findOrFail($id);
+        // return $question;
+        // return response()->json($question,201);
         return view('questions.show', compact('question'));
     }
 

@@ -8,5 +8,5 @@
     <textarea class="form-control question-body" id="exampleFormControlTextarea1" value="{{isset($question->body) ?  $question->body : old('body') }}" rows="3" required>{{isset($question->body) ?  $question->body : old('body') }}
     </textarea>
   </div>
-  <button type="submit" class="btn btn-{{$formMode ==='Create' ? 'success' : 'primary'}} question-submit">{{$formMode ==='Create' ? 'create' : 'edit'}}</button>
+  <button type="submit" class="btn btn-{{$formMode ==='create' ? 'success' : 'primary'}} question-submit">{{$formMode ==='create' ? 'create' : 'edit'}}</button>
 </div>
